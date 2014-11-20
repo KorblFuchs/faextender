@@ -226,7 +226,18 @@ com.neocodenetworks.faextender.ImageDownload = {
 			com.neocodenetworks.faextender.Base.logException(err);
 			return;
 		}
+	},
+
+	FixCloudflare: function(doc) {
+		var jQuery = com.neocodenetworks.faextender.Base.getjQuery(doc);
+
+		var link = com.neocodenetworks.faextender.Base.getDownloadLink(doc, jQuery);
+		link.attr("href", link.attr("href") + "?invalidate");
+		
+		var submissionImg = jQuery("#submissionImg");
+		submissionImg.attr("src", submissionImg.attr("src") + "?invalidate");
 	}
 }
 
 com.neocodenetworks.faextender.Base.registerTarget(com.neocodenetworks.faextender.ImageDownload.Bind, ["/view/", "/full/"]);
+com.neocodenetworks.faextender.Base.registerTarget(com.neocodenetworks.faextender.ImageDownload.FixCloudflare, ["/view/", "/full/"]);
